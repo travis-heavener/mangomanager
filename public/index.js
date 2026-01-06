@@ -14,7 +14,7 @@ const updateDisplay = (data) => {
 
     // CPU
     $("#cpu-caption > span").text(data.cpu.name);
-    $("#cpu-speed").text(`${data.cpu.numCores} cores @ ${parseInt(data.cpu.currentSpeed * 1e3)} MHz`);
+    $("#cpu-speed").text(`${data.cpu.numCores} cores - ${parseInt(data.cpu.currentSpeed * 1e3)} MHz - ${data.cpu.temp === null ? '??' : parseInt(data.cpu.temp)}°C`);
     $("#cpu-usage-wheel").css("--wheelRot", `${clamp(0, 300, data.cpu.load * 3)}deg`);
     $("#cpu-usage-percent").text(clamp(0, 100, parseInt(data.cpu.load)) + "%");
 

@@ -24,6 +24,9 @@ body {
     width: 100%;
     min-height: 100%;
     background-color: var(--color-base);
+    background: linear-gradient(var(--color-base) 0%, var(--color-dark) 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 
     color: var(--text-base);
     font-family: "Roboto", sans-serif;
@@ -44,7 +47,7 @@ main {
 
 h1 {
     display: block;
-    margin: 2rem 0 1rem 0;
+    padding: 2rem 0 1rem 0;
     width: 100%;
     font-size: 2.75rem;
     font-weight: 700;
@@ -79,27 +82,33 @@ section {
     position: relative;
 }
 
-section > h2 {
+.wrapper {
+    width: 10rem;
+}
+
+section h2 {
     position: absolute;
     font-size: 1.1rem;
     top: 0.875rem;
     left: 0.875rem;
 }
 
-section > h3 {
+section h3 {
+    width: 100%;
     font-size: 1.1rem;
     height: 2.6em;
     line-height: 2.6em;
     text-align: center;
 }
 
-section > h3 > span {
+section h3 > span {
     display: inline-block;
     vertical-align: middle;
     line-height: 1.15em;
 }
 
 section h4 {
+    margin-top: 0.25rem;
     color: var(--text-dark);
     font-size: 0.9rem;
     font-weight: 400;
