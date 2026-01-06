@@ -33,4 +33,10 @@ const updateDisplay = (data) => {
     $("#ram-percent-wheel").css("--wheelRot", `${clamp(0, 300, ramUsedPercent * 3)}deg`);
     $("#ram-percent").text(clamp(0, 100, parseInt(ramUsedPercent)) + "%");
     $("#ram-caption > span").text(`${(data.ram.used / (2 ** 30)).toFixed(1)} GiB used`);
+
+    // OS info
+    $("#os-hostname").text(data.os.hostname);
+    $("#os-arch").text(data.os.arch);
+    $("#os-platform").text(data.os.platform);
+    $("#os-build").text(data.os.build);
 };
