@@ -6,6 +6,9 @@
 MangoManager (or simply "Mango") is a LAN hardware resource manager that allows other
 network devices to view the host device's hardware utilization in the browser.
 
+I mainly created this to work on my knowledge of web sockets, and to serve as my first
+project for 2026.
+
 ## Configuration
 
 1. Install [Node.js](https://nodejs.org/).

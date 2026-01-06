@@ -3,13 +3,18 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { exit } from "process";
+import { WebSocketServer } from "ws";
 
-import { debug } from "./tools.mjs";
+import { debug, collectTelemetry } from "./tools.mjs";
+
+// Resolve paths
+const publicPath = path.join(import.meta.dirname, "../public");
+const configPath = path.join(import.meta.dirname, "../conf/config.json");
 
 // Load config.json
 const config = {};
+const WSS_PORT = 5589;
 {
-    const configPath = path.join(import.meta.dirname, "../conf/config.json");
     if (!fs.existsSync(configPath)) {
         debug.log("Missing conf/config.json, aborting...");
         exit(1);
@@ -60,7 +65,30 @@ let hostIP = null;
 
 // Create Express app
 const app = express();
+app.use(express.static(publicPath));
 app.listen(
     config.port,
-    () => debug.log(`Live at http://${hostIP}:${config.port}`)
+    () => {
+        // Log success
+        debug.log(`Live at http://${hostIP}:${config.port}`)
+
+        // Open web socket
+        const wss = new WebSocketServer({ port: WSS_PORT });
+        debug.log(`Web socket live at ws://${hostIP}:${WSS_PORT}`);
+        wss.on("connection", (ws) => {
+            ws.on("error", debug.log);
+
+            // Periodically send data
+            let interval;
+
+            interval = setInterval(() => {
+                ws.send(
+                    JSON.stringify(collectTelemetry())
+                );
+            }, 1000);
+
+            // Configure interval close
+            ws.on("close", () => clearInterval(interval));
+        });
+    }
 );

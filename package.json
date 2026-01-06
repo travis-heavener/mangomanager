@@ -4,12 +4,14 @@
   "description": "LAN hardware resource manager",
   "main": "src/mango.js",
   "scripts": {
-    "dev": "node src/mango.js"
+    "dev": "node src/mango.mjs"
   },
   "author": "Travis Heavener",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "systeminformation": "^5.29.1",
+    "ws": "^8.19.0"
   },
   "type": "module"
 }
