@@ -1,4 +1,3 @@
-import os from "os";
 import si from "systeminformation";
 
 export const debug = {
