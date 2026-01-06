@@ -1,6 +1,6 @@
+import dgram from "dgram";
 import express from "express";
 import fs from "fs";
-import os from "os";
 import path from "path";
 import { exit } from "process";
 import { WebSocketServer } from "ws";
@@ -42,25 +42,20 @@ const WSS_PORT = 5589;
         debug.log("Loaded conf/config.json!");
 }
 
-// Fetch local IP
+// Grab local IP from outbound connection (e.g. Google DNS)
 let hostIP = null;
-{
-    const netInts = os.networkInterfaces();
-    if (netInts.length === 0) {
-        debug.log("No network intefaces found, aborting...");
-        exit(1);
-    }
-
-    for (const alias of Object.entries(netInts)[0][1]) {
-        if (alias.family === "IPv4" && alias.address !== "127.0.0.1") {
-            hostIP = alias.address;
-        }
-    }
-
-    if (hostIP === null) {
-        debug.log("Failed to determine host IP address, aborting...");
-        exit(1);
-    }
+try {
+    hostIP = await new Promise((resolve, _) => {
+        const socket = dgram.createSocket("udp4");
+        socket.connect(80, "8.8.8.8", () => {
+            const address = socket.address();
+            socket.close();
+            resolve(address.address);
+        });
+    });
+} catch (e) {
+    debug.log("Failed to determine host IP address, aborting...");
+    exit(1);
 }
 
 // Create Express app
