@@ -79,13 +79,12 @@ app.listen(
             ws.on("error", debug.log);
 
             // Periodically send data
+            const resend = async () => {
+                ws.send( JSON.stringify(await collectTelemetry()) );
+            };
             let interval;
-
-            interval = setInterval(async () => {
-                ws.send(
-                    JSON.stringify(await collectTelemetry())
-                );
-            }, 5000);
+            interval = setInterval(resend, 5000);
+            resend(); // Initial invocation
 
             // Configure interval close
             ws.on("close", () => clearInterval(interval));
