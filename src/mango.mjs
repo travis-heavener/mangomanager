@@ -5,7 +5,7 @@ import path from "path";
 import { exit } from "process";
 import { WebSocketServer } from "ws";
 
-import { debug, telemetry } from "./tools.mjs";
+import { collectTelemetry, debug, telemetry } from "./tools.mjs";
 
 // Resolve paths
 const publicPath = path.join(import.meta.dirname, "../public");
@@ -57,6 +57,11 @@ try {
     debug.log("Failed to determine host IP address, aborting...");
     exit(1);
 }
+
+// Collect first telemetry
+await collectTelemetry();
+if (config.enableVerboseLogs)
+    debug.log("Collected initial telemetry.");
 
 // Create Express app
 const app = express();

@@ -4,35 +4,10 @@ export const debug = {
     "log": (...args) => console.log("[Mango]", ...args)
 };
 
-export const telemetry = {
-    cpu: {
-        name: null,
-        baseSpeed: null,
-        numCores: null,
-        temp: null,
-        load: null
-    },
-    ram: {
-        total: null,
-        used: null,
-        baseSpeed: null
-    },
-    gpus: [],
-    storage: [],
-    os: {
-        platform: null,
-        arch: null,
-        hostname: null
-    },
-    battery: {
-        percent: null,
-        isCharging: null,
-        hasBattery: null
-    }
-};
+export const telemetry = {};
 
 // Iteratively collect telemetry
-const loadTelemetry = async () => {
+export const collectTelemetry = async () => {
     return new Promise((resolve, reject) => {
         const data = {
             cpu: {
@@ -71,9 +46,8 @@ const loadTelemetry = async () => {
 
                 if (numResolved === numReqs) {
                     Object.assign(telemetry, data);
+                    setTimeout(collectTelemetry, 5000);
                     resolve(telemetry);
-                    setTimeout(loadTelemetry, 5000);
-                    console.log("Requed")
                 }
             });
         };
@@ -130,6 +104,3 @@ const loadTelemetry = async () => {
         });
     });
 };
-
-// Initial invocation
-loadTelemetry();
