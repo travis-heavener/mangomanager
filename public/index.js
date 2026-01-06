@@ -38,7 +38,7 @@ const updateDisplay = (data) => {
     $("#os-hostname").text(data.os.hostname);
     $("#os-arch").text(data.os.arch);
     $("#os-platform").text(data.os.platform);
-    $("#os-build").text(data.os.build);
+    $("#os-gpus").text(data.gpus.map(g => `${g.name} (${(g.totalVram / (2 ** 30)).toFixed(0)} GiB)`).join(", "));
 
     // Add storage info
     for (const drive of data.storage.reverse()) {

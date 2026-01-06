@@ -156,10 +156,7 @@ section h5 {
 
 /****************** OS Info ******************/
 
-#os-section > div {
-    margin-top: 1rem;
-    width: 100%;
-}
+#os-section > div { width: 100% }
 
 #os-section h3 {
     margin: 0.67em 0;
@@ -172,6 +169,4 @@ section h5 {
     line-height: 1.3;
 }
 
-#os-section h3 > span {
-    font-weight: 400;
-}
+#os-section h3 > span { font-weight: 400 }
