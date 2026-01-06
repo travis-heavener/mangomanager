@@ -64,12 +64,12 @@ app.use(express.static(publicPath));
 app.listen(
     config.port,
     () => {
-        // Log success
-        debug.log(`Live at http://${hostIP}:${config.port}`)
-
         // Open web socket
         const wss = new WebSocketServer({ port: WSS_PORT });
-        debug.log(`Web socket live at ws://${hostIP}:${WSS_PORT}`);
+
+        if (config.enableVerboseLogs)
+            debug.log(`Web socket live on port ${WSS_PORT}`);
+
         wss.on("connection", (ws) => {
             ws.on("error", debug.log);
 
@@ -84,5 +84,8 @@ app.listen(
             // Configure interval close
             ws.on("close", () => clearInterval(interval));
         });
+
+        // Log success
+        debug.log(`Live at http://${hostIP}:${config.port}`);
     }
 );
