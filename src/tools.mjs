@@ -19,7 +19,7 @@ export const collectTelemetry = () => {
             },
             ram: {
                 total: null,
-                free: null,
+                used: null,
                 baseSpeed: null,
                 voltage: null
             },
@@ -63,7 +63,7 @@ export const collectTelemetry = () => {
         bindReq(si.currentLoad, t => data.cpu.load = t.currentLoad);
 
         // RAM
-        bindReq(si.mem, m => (data.ram.total = m.total, data.ram.free = m.free));
+        bindReq(si.mem, m => (data.ram.total = m.total, data.ram.used = m.used));
         bindReq(si.memLayout, m => {
             data.ram.baseSpeed = m[0].clockSpeed;
             data.ram.voltage = m[0].voltageConfigured;

@@ -26,4 +26,11 @@ const updateDisplay = (data) => {
         $("#battery-percent").text(clamp(0, 100, parseInt(data.battery.percent)) + "%");
         $("#battery-charging-status").text((data.battery.isCharging ? "" : "Not ") + "Charging");
     }
+
+    // RAM
+    const ramUsedPercent = 100 * data.ram.used / data.ram.total;
+    $("#ram-speed").text(`${(data.ram.total / (2 ** 30)).toFixed(0)} GiB @ ${parseInt(data.ram.baseSpeed)} MT/s`);
+    $("#ram-percent-wheel").css("--wheelRot", `${clamp(0, 300, ramUsedPercent * 3)}deg`);
+    $("#ram-percent").text(clamp(0, 100, parseInt(ramUsedPercent)) + "%");
+    $("#ram-caption > span").text(`${(data.ram.used / (2 ** 30)).toFixed(1)} GiB used`);
 };
