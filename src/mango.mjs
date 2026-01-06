@@ -85,7 +85,7 @@ app.listen(
                 ws.send(
                     JSON.stringify(await collectTelemetry())
                 );
-            }, 1000);
+            }, 5000);
 
             // Configure interval close
             ws.on("close", () => clearInterval(interval));
