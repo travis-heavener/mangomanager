@@ -67,6 +67,10 @@ const updateDisplay = (data) => {
             `);
         } else {
             // Update existing
+            $(`#${id} h3`).text(`${usedGB.toFixed(1)} GiB used`);
+            $(`#${id} h4`).text(`${parseInt(totalGB)} GiB - ${drive.type}`);
+            $(`#${id} h5`).text(`${usedPercent.toFixed(1)}%`);
+            $(`#${id} > .wrapper > .wheel`).css("--wheelRot", `${clamp(0, 300, usedPercent * 3)}deg`);
         }
     }
 };
