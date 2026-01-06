@@ -25,7 +25,12 @@ export const collectTelemetry = () => {
             },
             gpus: [],
             storage: [],
-            os: {},
+            os: {
+                platform: null,
+                arch: null,
+                build: null,
+                hostname: null
+            },
             battery: {
                 percent: null,
                 isCharging: null,
@@ -89,7 +94,12 @@ export const collectTelemetry = () => {
         });
 
         // OS
-        //
+        bindReq(si.osInfo, o => {
+            data.os.platform = o.platform;
+            data.os.arch = o.arch;
+            data.os.build = o.build;
+            data.os.hostname = o.hostname;
+        });
 
         // Battery
         bindReq(si.battery, b => {
