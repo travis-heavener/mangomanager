@@ -1,0 +1,11 @@
+{
+  "name": "mangomanager",
+  "version": "0.0.1",
+  "description": "LAN hardware resource manager",
+  "main": "src/mango.js",
+  "scripts": {
+    "dev": "node src/mango.js"
+  },
+  "author": "Travis Heavener",
+  "license": "ISC"
+}
