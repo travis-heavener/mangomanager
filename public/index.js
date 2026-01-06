@@ -39,4 +39,34 @@ const updateDisplay = (data) => {
     $("#os-arch").text(data.os.arch);
     $("#os-platform").text(data.os.platform);
     $("#os-build").text(data.os.build);
+
+    // Add storage info
+    for (const drive of data.storage.reverse()) {
+        // Determine new stats
+        const usedGB = (drive.size - drive.free) / (2 ** 30);
+        const totalGB = drive.size / (2 ** 30);
+        const usedPercent = (1 - (drive.free / drive.size)) * 100;
+
+        // Update display
+        const id = "drive-section-" + drive.name.replaceAll(/[^\w]/g, "-");
+        const jSection = $("#" + id);
+        if (jSection.length === 0) {
+            // Create new widget
+            $("#ram-section").after(`
+                <section id="${id}" class="drive-section">
+                    <h2>Drive - ${drive.name}</h2>
+                    <div class="wrapper">
+                        <div class="wheel" style="--wheelRot: ${clamp(0, 300, usedPercent * 3)}deg">
+                            <div></div>
+                            <h5><em>${usedPercent.toFixed(1)}%</em></h5>
+                        </div>
+                        <h3><span>${usedGB.toFixed(1)} GiB used</span></h3>
+                    </div>
+                    <h4>${parseInt(totalGB)} GiB - ${drive.type}</h4>
+                </section>
+            `);
+        } else {
+            // Update existing
+        }
+    }
 };
