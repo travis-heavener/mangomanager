@@ -7,5 +7,9 @@
     "dev": "node src/mango.js"
   },
   "author": "Travis Heavener",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "type": "module"
 }
