@@ -81,9 +81,9 @@ app.listen(
             // Periodically send data
             let interval;
 
-            interval = setInterval(() => {
+            interval = setInterval(async () => {
                 ws.send(
-                    JSON.stringify(collectTelemetry())
+                    JSON.stringify(await collectTelemetry())
                 );
             }, 1000);
 
