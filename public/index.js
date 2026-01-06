@@ -14,7 +14,7 @@ const updateDisplay = (data) => {
 
     // CPU
     $("#cpu-caption > span").text(data.cpu.name);
-    $("#cpu-speed").text(`${data.cpu.numCores} cores - ${parseInt(data.cpu.currentSpeed * 1e3)} MHz - ${data.cpu.temp === null ? '??' : parseInt(data.cpu.temp)}°C`);
+    $("#cpu-speed").text(`${data.cpu.numCores} cores - ${parseInt(data.cpu.baseSpeed * 1e3)} MHz - ${data.cpu.temp === null ? '??' : parseInt(data.cpu.temp)}°C`);
     $("#cpu-usage-wheel").css("--wheelRot", `${clamp(0, 300, data.cpu.load * 3)}deg`);
     $("#cpu-usage-percent").text(clamp(0, 100, parseInt(data.cpu.load)) + "%");
 
@@ -58,7 +58,7 @@ const updateDisplay = (data) => {
                     <div class="wrapper">
                         <div class="wheel" style="--wheelRot: ${clamp(0, 300, usedPercent * 3)}deg">
                             <div></div>
-                            <h5><em>${usedPercent.toFixed(1)}%</em></h5>
+                            <h5>${usedPercent.toFixed(1)}%</h5>
                         </div>
                         <h3><span>${usedGB.toFixed(1)} GiB used</span></h3>
                     </div>

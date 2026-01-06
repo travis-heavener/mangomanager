@@ -4,30 +4,54 @@ export const debug = {
     "log": (...args) => console.log("[Mango]", ...args)
 };
 
-export const collectTelemetry = () => {
+export const telemetry = {
+    cpu: {
+        name: null,
+        baseSpeed: null,
+        numCores: null,
+        temp: null,
+        load: null
+    },
+    ram: {
+        total: null,
+        used: null,
+        baseSpeed: null
+    },
+    gpus: [],
+    storage: [],
+    os: {
+        platform: null,
+        arch: null,
+        hostname: null
+    },
+    battery: {
+        percent: null,
+        isCharging: null,
+        hasBattery: null
+    }
+};
+
+// Iteratively collect telemetry
+const loadTelemetry = async () => {
     return new Promise((resolve, reject) => {
         const data = {
             cpu: {
                 name: null,
                 baseSpeed: null,
-                currentSpeed: null,
                 numCores: null,
                 temp: null,
-                voltage: null,
                 load: null
             },
             ram: {
                 total: null,
                 used: null,
-                baseSpeed: null,
-                voltage: null
+                baseSpeed: null
             },
             gpus: [],
             storage: [],
             os: {
                 platform: null,
                 arch: null,
-                build: null,
                 hostname: null
             },
             battery: {
@@ -45,28 +69,27 @@ export const collectTelemetry = () => {
                 callback(...args);
                 ++numResolved;
 
-                if (numResolved === numReqs)
-                    resolve(data);
+                if (numResolved === numReqs) {
+                    Object.assign(telemetry, data);
+                    resolve(telemetry);
+                    setTimeout(loadTelemetry, 5000);
+                    console.log("Requed")
+                }
             });
         };
 
         // CPU
-        bindReq(si.cpuCurrentSpeed, s => data.cpu.currentSpeed = s.avg);
         bindReq(si.cpu, c => {
             data.cpu.name = c.brand;
             data.cpu.numCores = c.physicalCores;
             data.cpu.baseSpeed = c.speed;
-            data.cpu.voltage = c.voltage;
         });
         bindReq(si.cpuTemperature, t => data.cpu.temp = t.main);
         bindReq(si.currentLoad, t => data.cpu.load = t.currentLoad);
 
         // RAM
         bindReq(si.mem, m => (data.ram.total = m.total, data.ram.used = m.used));
-        bindReq(si.memLayout, m => {
-            data.ram.baseSpeed = m[0].clockSpeed;
-            data.ram.voltage = m[0].voltageConfigured;
-        });
+        bindReq(si.memLayout, m => data.ram.baseSpeed = m[0].clockSpeed);
 
         // GPU
         // Select ONLY the first GPU
@@ -96,7 +119,6 @@ export const collectTelemetry = () => {
         bindReq(si.osInfo, o => {
             data.os.platform = o.platform;
             data.os.arch = o.arch;
-            data.os.build = o.build;
             data.os.hostname = o.hostname;
         });
 
@@ -108,3 +130,6 @@ export const collectTelemetry = () => {
         });
     });
 };
+
+// Initial invocation
+loadTelemetry();

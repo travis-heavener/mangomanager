@@ -5,7 +5,7 @@ import path from "path";
 import { exit } from "process";
 import { WebSocketServer } from "ws";
 
-import { debug, collectTelemetry } from "./tools.mjs";
+import { debug, telemetry } from "./tools.mjs";
 
 // Resolve paths
 const publicPath = path.join(import.meta.dirname, "../public");
@@ -75,7 +75,7 @@ app.listen(
 
             // Periodically send data
             const resend = async () => {
-                ws.send( JSON.stringify(await collectTelemetry()) );
+                ws.send( JSON.stringify(telemetry) );
             };
             let interval;
             interval = setInterval(resend, 5000);
