@@ -170,3 +170,7 @@ section h5 {
 }
 
 #os-section h3 > span { font-weight: 400 }
+
+#os-gpus {
+    font-size: 0.8em;
+}
