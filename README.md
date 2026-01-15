@@ -1,5 +1,19 @@
-# MangoManager
-## Travis Heavener
+<div align="center">
+    <img src="icons/readme-icon.jpg" width="300" height="158">
+    <br>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-purple.svg"></a>
+    <img src="https://img.shields.io/badge/Language-JavaScript-orange">
+    <img src="https://img.shields.io/github/stars/travis-heavener/mangomanager?style=flat&label=Stars&color=white">
+    <br>
+    <h1>MangoManager</h1>
+</div>
+
+<div align="center">
+    <h3><em>A LAN-based hardware monitor</em></h3>
+    <h3>Project by Travis Heavener</h3>
+</div>
+
+---
 
 ## About
 

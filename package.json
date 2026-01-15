@@ -1,6 +1,6 @@
 {
   "name": "mangomanager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "LAN hardware resource manager",
   "main": "src/mango.js",
   "scripts": {
